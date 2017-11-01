@@ -58,7 +58,29 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown', function(e) {
+    // select for audio with data-key=e.keyCode, pseudo-selector
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    if (!audio) {
+      return;
+    } else {
+      // press key multiple times in a row, each time will rewind audio to beginning
+      audio.currentTime = 0;
+      audio.play();
+    }
 
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    if (!key) {
+      return;
+    } else {
+      key.classList.add('playing')
+    }
+  })
+  // add transition end event listener to each key
+  const keys = document.querySelectorAll('.key')
+  keys.forEach (key => addEventListener('transitionend', function(e) {
+    key.classList.remove('playing')
+  }))
 </script>
 
 
