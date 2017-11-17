@@ -99,6 +99,46 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  let firstKey;
+
+  checkboxes.forEach( checkbox => checkbox.addEventListener('click', handleCheck ))
+
+  function handleCheck(e) {
+    // check that shift key is down
+    // check that they are checking the box (not unchecking it)
+    if (e.shiftKey && this.checked) {
+      let check = false;
+      checkboxes.forEach( checkbox => {
+        console.log(checkbox);
+        // start checking at firstKey and stop checking at lastKey
+        if (checkbox === firstKey || checkbox === this) {
+          check = !check;
+          console.log('change');
+        }
+        if (!check) return;
+        checkbox.checked = true;
+      })
+
+    }
+
+    firstKey = this;
+  }
+  // function shiftSelect(e) {
+  //   console.log('keydown', e);
+  //   if (e.keyCode === 16 && !firstKey) {
+  //   }
+  // }
+  // document.addEventListener('keydown', shiftSelect)
+  // document.addEventListener('keyup', (e) => {
+  //   console.log('keyup', e);
+  // })
+  // document.addEventListener('mousedown', (e) => {
+  //   if (!firstKey) {
+  //     console.log('mousedown', e);
+  //     firstKey = checkboxes.findIndex( checkbox => checkbox === e )
+  //   }
+  // })
 </script>
 </body>
 </html>
