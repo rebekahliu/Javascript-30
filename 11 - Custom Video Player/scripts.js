@@ -21,9 +21,27 @@ function updateButton() {
   toggle.textContent = icon;
 }
 
+function skip() {
+  video.currentTime += parseFloat(this.dataset.skip);
+}
+
+function updateRange() {
+  video[this.name] = parseFloat(this.value);
+}
+
+function handleProgress() {
+  const percent = ( video.currentTime / video.duration ) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+}
+
 // hook up event listeners
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
-
+// progress and timeupdate will both update timecode
+video.addEventListener('timeupdate', handleProgress);
 toggle.addEventListener('click', togglePlay);
+skipButtons.forEach( button => button.addEventListener('click', skip) );
+ranges.forEach( range => range.addEventListener('change', updateRange) );
+ranges.forEach( range => range.addEventListener('mousemove', updateRange) );
+
